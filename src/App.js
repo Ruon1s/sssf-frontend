@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Home} from '../src/pages/home'
+import {Login} from "./pages/Login";
+import {Register} from "./pages/Register";
+import {AddEntry} from "./pages/AddEntry";
+import {SingleEntry} from "./pages/SingleEntry";
+import 'fontsource-roboto';
+import {Header} from "./components/Header";
+import {useSelector} from "react-redux";
+import {selectUser} from "./features/userSlice";
+
+
 
 function App() {
+   let user = useSelector(selectUser);
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+<BrowserRouter>
+    <Header user={user}/>
+    <Switch>
+
+        {user ?
+            <>
+                <Route path='/Home' component={Home}/>
+                <Route path='/Add' component={AddEntry}/>
+            </>
+            :
+            <>
+            <Route path='/Register' component={Register}/>
+            <Route path='/' exact component={Login} />
+            </>
+        }
+    </Switch>
+</BrowserRouter>
+      </div>
+
   );
 }
 
