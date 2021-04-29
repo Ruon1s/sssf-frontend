@@ -6,12 +6,31 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import store from './app/store';
-import {ApolloClient, InMemoryCache} from "@apollo/client";
+import {ApolloClient, from, InMemoryCache, HttpLink, createHttpLink} from "@apollo/client";
+import {onError} from '@apollo/client/link/error'
 import {gql} from '@apollo/client';
 import {ApolloProvider} from "@apollo/client/react";
-//uri: 'https://localhost:8000',
+
+const errorLink = onError(({ graphqlErrors, networkError}) => {
+    if(graphqlErrors) {
+        graphqlErrors.map(({message, location, path}) => {
+            alert(`Graphql error ${message}`);
+        })
+    }
+});
+
+const link = from([
+    errorLink,
+    new HttpLink({uri: 'https://localhost:8000'})
+]);
+
+const httplink = createHttpLink({
+    uri: 'https://localhost:8000'
+});
+
+
 const client = new ApolloClient({
-    uri: 'https://localhost:8000',
+    httplink,
     cache: new InMemoryCache()
 });
 

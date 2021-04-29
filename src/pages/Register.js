@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import {TextField, makeStyles, Button} from "@material-ui/core";
 import { gql, useMutation } from '@apollo/client';
+import {REGISTER_USER} from '../GraphQL/Mutations'
 
 export const Register = () => {
 
@@ -36,17 +37,24 @@ export const Register = () => {
         }
     }));
 
-    const gqlRegister = () => {
-      let input;
-      const [gqlRegister, {data}] = useMutation()
-    };
+    const [register, {error}] = useMutation(REGISTER_USER);
 
-
-    const register = async (e) => {
+    const registerr = async (e) => {
         e.preventDefault();
         const username = userName;
-        const pw= password;
-        console.log('hello register here');
+        const pw = password;
+        console.log(username, password);
+        await register({
+            variables: {
+                username: username,
+                password: pw,
+            }
+        });
+        if(error){
+            console.log(error);
+        }
+
+
     };
 
     const classes = useStyles();
@@ -67,7 +75,7 @@ export const Register = () => {
             setPassword(e.target.value);
         }}/>
             <Button variant='contained' className={classes.button} onClick={(e) => {
-                register(e);}}
+                registerr(e);}}
             >Submit</Button>
         </form>
         </div>
