@@ -21,6 +21,7 @@ export const Register = () => {
             flexDirection: 'column',
             flexGrow: 1,
             padding: 30,
+            alignItems: 'center'
         },
 
         form: {
@@ -69,7 +70,7 @@ export const Register = () => {
     return(
         <div className={classes.container}>
         <div className={classes.content}>
-            HELLO
+            Register
         <form className={classes.form} autoComplete="off">
         <TextField className={classes.inputField} id="outlined-basic" label="Username" variant="outlined" value={userName} onChange={(e) => {
             setUserName(e.target.value);

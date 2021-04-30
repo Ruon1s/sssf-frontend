@@ -8,21 +8,22 @@ import {SingleEntry} from "./pages/SingleEntry";
 import 'fontsource-roboto';
 import {Header} from "./components/Header";
 import {useSelector} from "react-redux";
-import {AUTH_USER} from "./constants";
+import {AUTH_TOKEN} from "./constants";
+import {makeStyles} from "@material-ui/core";
 
 
 
 
 
 function App() {
+    const user = localStorage.getItem(AUTH_TOKEN);
+    console.log(user);
 
-
-/*
 
   return (
       <div>
 <BrowserRouter>
-    <Header/>
+    <Header user={user}/>
     <Switch>
 
         {user ?
@@ -44,24 +45,4 @@ function App() {
 }
 
 export default App;
-*/
 
-    return (
-        <div>
-            <BrowserRouter>
-                <Header/>
-                <Switch>
-
-                            <Route path='/Home' component={Home}/>
-                            <Route path='/Add' component={AddEntry}/>
-
-                            <Route path='/Register' component={Register}/>
-                            <Route path='/' exact component={Login} />
-                </Switch>
-            </BrowserRouter>
-        </div>
-
-    );
-}
-
-export default App;

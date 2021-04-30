@@ -7,3 +7,34 @@ export const REGISTER_USER = gql`
         }
         }
     `;
+
+export const ADD_ENTRY = gql`
+   mutation addEntry(
+    $Entryname: String 
+    $File: Upload 
+    $Ingredients: String 
+    $Steps: String 
+    $Rating: Int 
+    $Date: Float 
+    $userID: String) {
+        addEntry(
+            Entryname: $Entryname
+            File: $File
+            Ingredients: $Ingredients
+            Steps: $Steps
+            Rating: $Rating
+            Date: $Date
+            userID: $userID) 
+            {
+                Entryname
+                File
+                Ingredients
+                Steps
+                Rating
+                Date
+                userID
+                }
+   }
+   
+   
+   `;

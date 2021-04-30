@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {ApolloClient, from, InMemoryCache, HttpLink, createHttpLink} from "@apollo/client";
 import {setContext} from "@apollo/client/link/context";
 import {onError} from '@apollo/client/link/error'
-import {AUTH_USER} from "./constants";
+import {AUTH_TOKEN} from "./constants";
 import {gql} from '@apollo/client';
 import {ApolloProvider} from "@apollo/client/react";
 
@@ -21,8 +21,7 @@ const errorLink = onError(({ graphqlErrors, networkError}) => {
 });
 
 const authLink = setContext((_, { headers }) => {
-    const user = localStorage.getItem(AUTH_USER);
-    const token = user.token;
+    let token = localStorage.getItem(AUTH_TOKEN);
     return {
         headers: {
             ...headers,
