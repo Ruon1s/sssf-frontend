@@ -1,10 +1,12 @@
 
 import React, {useState} from 'react';
+import {useHistory} from 'react-router'
 import {TextField, makeStyles, Button} from "@material-ui/core";
 import { gql, useMutation } from '@apollo/client';
 import {REGISTER_USER} from '../GraphQL/Mutations'
 
 export const Register = () => {
+    const history = useHistory();
 
     const useStyles = makeStyles(() => ({
         container: {
@@ -37,36 +39,37 @@ export const Register = () => {
         }
     }));
 
-    const [register, {error}] = useMutation(REGISTER_USER);
-
-    const registerr = async (e) => {
-        e.preventDefault();
-        const username = userName;
-        const pw = password;
-        console.log(username, password);
-        await register({
-            variables: {
-                username: username,
-                password: pw,
-            }
-        });
-        if(error){
-            console.log(error);
-        }
 
 
-    };
 
     const classes = useStyles();
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
+    const [register] = useMutation(REGISTER_USER, {
+        variables: {
+            username: userName,
+            password: password
+        },
+        onCompleted:({register})=> {
+            console.log(register);
+            console.log('hello');
+            history.push('/')
+        }
+    });
 
+    const klikkaa = () => {
+        console.log('hey u klikked');
+        console.log(userName);
+        console.log(password);
+        register();
+    };
 
     return(
         <div className={classes.container}>
         <div className={classes.content}>
+            HELLO
         <form className={classes.form} autoComplete="off">
         <TextField className={classes.inputField} id="outlined-basic" label="Username" variant="outlined" value={userName} onChange={(e) => {
             setUserName(e.target.value);
@@ -75,7 +78,7 @@ export const Register = () => {
             setPassword(e.target.value);
         }}/>
             <Button variant='contained' className={classes.button} onClick={(e) => {
-                registerr(e);}}
+                klikkaa();}}
             >Submit</Button>
         </form>
         </div>

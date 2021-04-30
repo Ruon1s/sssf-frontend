@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Provider } from 'react-redux';
-import store from './app/store';
+
 import {ApolloClient, from, InMemoryCache, HttpLink, createHttpLink} from "@apollo/client";
+import {setContext} from "@apollo/client/link/context";
 import {onError} from '@apollo/client/link/error'
+import {AUTH_USER} from "./constants";
 import {gql} from '@apollo/client';
 import {ApolloProvider} from "@apollo/client/react";
 
@@ -19,28 +20,35 @@ const errorLink = onError(({ graphqlErrors, networkError}) => {
     }
 });
 
-const link = from([
-    errorLink,
-    new HttpLink({uri: 'https://localhost:8000'})
-]);
-
-const httplink = createHttpLink({
-    uri: 'https://localhost:8000'
+const authLink = setContext((_, { headers }) => {
+    const user = localStorage.getItem(AUTH_USER);
+    const token = user.token;
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : ''
+        }
+    };
 });
+
+const httpLink = createHttpLink({
+    uri: 'https://charge.jelastic.metropolia.fi/graphql'
+});
+
 
 
 const client = new ApolloClient({
-    httplink,
+    uri: 'https://charge.jelastic.metropolia.fi/graphql',
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache()
 });
+
 
 ReactDOM.render(
 
   <React.StrictMode>
       <ApolloProvider client={client}>
-      <Provider store={store}>
     <App />
-      </Provider>
       </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')

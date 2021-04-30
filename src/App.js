@@ -8,18 +8,21 @@ import {SingleEntry} from "./pages/SingleEntry";
 import 'fontsource-roboto';
 import {Header} from "./components/Header";
 import {useSelector} from "react-redux";
-import {selectUser} from "./features/userSlice";
+import {AUTH_USER} from "./constants";
+
+
 
 
 
 function App() {
-   let user = useSelector(selectUser);
 
+
+/*
 
   return (
       <div>
 <BrowserRouter>
-    <Header user={user}/>
+    <Header/>
     <Switch>
 
         {user ?
@@ -38,6 +41,27 @@ function App() {
       </div>
 
   );
+}
+
+export default App;
+*/
+
+    return (
+        <div>
+            <BrowserRouter>
+                <Header/>
+                <Switch>
+
+                            <Route path='/Home' component={Home}/>
+                            <Route path='/Add' component={AddEntry}/>
+
+                            <Route path='/Register' component={Register}/>
+                            <Route path='/' exact component={Login} />
+                </Switch>
+            </BrowserRouter>
+        </div>
+
+    );
 }
 
 export default App;
