@@ -54,10 +54,10 @@ export const AddEntry = () => {
     const [steps, setSteps] = useState("");
     const [rating, setRating] = useState(1);
 
-    const date = new Date().getDate();
+    const date =  Date.now().toString();
     const userID = localStorage.getItem(AUTH_USERID);
 
-    const [addEntry]= useMutation(ADD_ENTRY, {
+    const [addEntry] = useMutation(ADD_ENTRY, {
         variables: {
             Entryname: entryName,
             File: image,
@@ -70,12 +70,23 @@ export const AddEntry = () => {
         onCompleted:({addEntry}) => {
             console.log(addEntry);
             history.push('/Home')
+        },
+        onError(error){
+            console.log(error);
         }
     });
 
-    const submitForm = () => {
+    const submitForm = async () => {
+        console.log('entryname', entryName);
+        console.log('File', image);
+        console.log('Ingredients', ingredients);
+        console.log('steps', steps);
+        console.log('rating', rating);
+        console.log('date', date);
+        console.log('user_id', userID);
+
         console.log('submitted');
-      addEntry();
+      await addEntry();
     };
 
 

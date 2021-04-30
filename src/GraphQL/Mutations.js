@@ -15,11 +15,11 @@ export const ADD_ENTRY = gql`
     $Ingredients: String 
     $Steps: String 
     $Rating: Int 
-    $Date: Float 
+    $Date: String
     $userID: String) {
         addEntry(
             Entryname: $Entryname
-            File: $File
+            File: {File: $File}
             Ingredients: $Ingredients
             Steps: $Steps
             Rating: $Rating

@@ -11,6 +11,7 @@ import {onError} from '@apollo/client/link/error'
 import {AUTH_TOKEN} from "./constants";
 import {gql} from '@apollo/client';
 import {ApolloProvider} from "@apollo/client/react";
+import {createUploadLink} from "apollo-upload-client/public/index";
 
 const errorLink = onError(({ graphqlErrors, networkError}) => {
     if(graphqlErrors) {
@@ -30,15 +31,16 @@ const authLink = setContext((_, { headers }) => {
     };
 });
 
-const httpLink = createHttpLink({
+const uploadLink = createUploadLink({
     uri: 'https://charge.jelastic.metropolia.fi/graphql'
-});
+})
+
 
 
 
 const client = new ApolloClient({
     uri: 'https://charge.jelastic.metropolia.fi/graphql',
-    link: authLink.concat(httpLink),
+    link: authLink.concat(uploadLink),
     cache: new InMemoryCache()
 });
 
