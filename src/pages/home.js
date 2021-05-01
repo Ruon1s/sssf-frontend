@@ -7,16 +7,18 @@ import {AUTH_USERID} from "../constants";
 
 export const Home = () => {
     const userID = localStorage.getItem(AUTH_USERID);
-
-    const [getEntries, {loading, error, data}] = useQuery(GET_ENTRIES, {
+    console.log('userid', userID);
+    const  {loading, error, data} = useQuery(GET_ENTRIES, {
         variables: {
-            id: userID,
+            id: userID
         }
     });
+data.entriesByUser.map(object => {
+    console.log(object.Entryname);
+});
 
 
-
-    return(
+    return data.entriesByUser.map() (
         <div>
 
             <div>Home</div>
