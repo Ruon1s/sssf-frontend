@@ -10,3 +10,16 @@ export const LOGIN_USER = gql`
         }
     `;
 
+export const GET_ENTRIES = gql`
+    query entriesByUser($id: String!) {
+    entriesByUser(id: $id) {
+    id
+    Entryname
+    File
+    Ingredients
+    Steps
+    Rating
+    }
+    }
+`;
+

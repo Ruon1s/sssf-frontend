@@ -19,7 +19,7 @@ export const ADD_ENTRY = gql`
     $userID: String) {
         addEntry(
             Entryname: $Entryname
-            File: {File: $File}
+            File: {File: $File} 
             Ingredients: $Ingredients
             Steps: $Steps
             Rating: $Rating
