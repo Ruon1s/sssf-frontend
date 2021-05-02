@@ -70,6 +70,7 @@ export const AddEntry = () => {
         onCompleted:({addEntry}) => {
             console.log(addEntry);
             history.push('/Home')
+            window.location.reload();
         },
         onError(error){
             console.log(error);

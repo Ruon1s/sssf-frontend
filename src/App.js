@@ -30,6 +30,7 @@ function App() {
             <>
                 <Route path='/Home' component={Home}/>
                 <Route path='/Add' component={AddEntry}/>
+                <Route path='/Single/:id' component={SingleEntry}/>
             </>
             :
             <>

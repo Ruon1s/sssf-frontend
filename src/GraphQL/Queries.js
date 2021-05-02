@@ -23,3 +23,16 @@ export const GET_ENTRIES = gql`
     }
 `;
 
+export const SINGLE_ENTRY = gql`
+    query singleEntry($id: String){
+    singleEntry(id: $id) {
+    Entryname
+    File
+    Ingredients
+    Steps
+    Rating
+    }
+    }
+
+`;
+
