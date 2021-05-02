@@ -1,8 +1,9 @@
-import * as React from 'react';
-import {Link} from "react-router-dom";
+import React, {useState} from 'react';
+import {Link, useHistory} from "react-router-dom";
 import {Header} from "../components/Header";
-import {useQuery} from "@apollo/client";
+import {useQuery, useMutation} from "@apollo/client";
 import {GET_ENTRIES} from "../GraphQL/Queries";
+import {DELETE_ENTRY, REGISTER_USER} from "../GraphQL/Mutations";
 import {AUTH_USERID} from "../constants";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -46,7 +47,21 @@ const useStyles = makeStyles({
 
 
 export const Home = () => {
+    const history = useHistory();
+
+    const [delState, setDelState] = useState(null);
     const classes = useStyles();
+
+    const [delEntry] = useMutation(DELETE_ENTRY, {
+        variables: {
+            id: delState
+        },
+        onCompleted:({delState})=> {
+            console.log(delState);
+            console.log('hello');
+            history.push('/')
+        }
+    });
 
     const userID = localStorage.getItem(AUTH_USERID);
     console.log('userid', userID);
@@ -55,6 +70,15 @@ export const Home = () => {
             id: userID
         }
     });
+
+    const onClickDelete = (id) => {
+
+        setDelState(id);
+        delEntry();
+
+    };
+
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
@@ -82,7 +106,7 @@ export const Home = () => {
                         <Button variant='contained' size="small" color="primary" className={classes.btn}>
                             Edit
                         </Button>
-                        <Button variant='contained' size="small" color="secondary">
+                        <Button variant='contained' size="small" color="secondary" onClick={onClickDelete(id)}>
                             Delete
                         </Button>
 

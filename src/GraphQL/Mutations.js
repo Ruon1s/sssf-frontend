@@ -8,6 +8,13 @@ export const REGISTER_USER = gql`
         }
     `;
 
+export const DELETE_ENTRY = gql`
+    mutation deleteEntry($id: String){
+    deleteEntry(id: $id){
+        Entryname
+    }
+`;
+
 export const ADD_ENTRY = gql`
    mutation addEntry(
     $Entryname: String 
