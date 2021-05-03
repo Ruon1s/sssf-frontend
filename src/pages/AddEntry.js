@@ -45,6 +45,8 @@ export const AddEntry = () => {
 
     const history = useHistory();
 
+
+
     const [entryName, setEntryName] = useState("");
     const [image, setImage] = useState(null);
     const [ingredients, setIngredients] = useState("");
@@ -53,17 +55,9 @@ export const AddEntry = () => {
 
     const date = Date.now().toString();
     const userID = localStorage.getItem(AUTH_USERID);
-
+    const [variables, setVariables] = useState({Date: date, userID: userID});
     const [addEntry] = useMutation(ADD_ENTRY, {
-        variables: {
-            Entryname: entryName,
-            File: image,
-            Ingredients: ingredients,
-            Steps: steps,
-            Rating: rating,
-            Date: date,
-            userID: userID
-        },
+        variables,
         onCompleted: ({addEntry}) => {
             console.log(addEntry);
             history.push('/Home');
@@ -75,15 +69,9 @@ export const AddEntry = () => {
     });
 
     const submitForm = async () => {
-        console.log('entryname', entryName);
-        console.log('File', image);
-        console.log('Ingredients', ingredients);
-        console.log('steps', steps);
-        console.log('rating', rating);
-        console.log('date', date);
-        console.log('user_id', userID);
-
+        setVariables({...variables, userID: userID, Date: date});
         console.log('submitted');
+        console.log('variables', variables);
         await addEntry();
     };
 
@@ -92,9 +80,9 @@ export const AddEntry = () => {
         <div className={classes.container}>
             <form className={classes.form}>
                 <p className={classes.inputField}>Entry name</p>
-                <TextField className={classes.inputField} id="outlined-basic" variant="outlined" value={entryName}
+                <TextField className={classes.inputField} id="outlined-basic" variant="outlined" value={variables.Entryname}
                            onChange={(e) => {
-                               setEntryName(e.target.value);
+                               setVariables({...variables, Entryname: e.target.value});
                            }
                            }/>
                 <input
@@ -102,44 +90,46 @@ export const AddEntry = () => {
                     id="raised-button-file"
                     type="file"
                     onChange={(e) => {
-                        setImage(e.target.files[0]);
-                        console.log(image);
+                        setVariables({...variables, File: e.target.files[0]});
                     }
                     }
                 />
                 <p className={classes.inputField}>Ingredients</p>
                 <TextareaAutosize className={classes.inputField} id="outlined-basic" variant="outlined"
-                                  value={ingredients} onChange={(e) => {
-                    setIngredients(e.target.value);
+                                  value={variables.Ingredients} onChange={(e) => {
+                    setVariables({...variables, Ingredients: e.target.value});
+
                 }
                 }/>
                 <p className={classes.inputField}>Steps</p>
                 <TextareaAutosize className={classes.inputField} id="outlined-basic" label="Steps" variant="outlined"
-                                  value={steps} onChange={(e) => {
-                    setSteps(e.target.value);
+                                  value={variables.Steps} onChange={(e) => {
+                    setVariables({...variables, Steps: e.target.value});
                 }
                 }/>
                 <div>
                     <span>1</span>
-                    <Radio value={1} checked={rating === 1} onChange={(e) => {
-                        setRating(1);
+                    <Radio value={1} checked={variables.Rating === 1} onChange={(e) => {
+                        setVariables({...variables, Rating: 1});
                         console.log(image);
                     }}/>
                     <span>2</span>
-                    <Radio value={2} checked={rating === 2} onChange={(e) => {
-                        setRating(2);
+                    <Radio value={2} checked={variables.Rating === 2} onChange={(e) => {
+                        setVariables({...variables, Rating: 2});
                     }}/>
                     <span>3</span>
-                    <Radio value={3} checked={rating === 3} onChange={(e) => {
-                        setRating(3);
+                    <Radio value={3} checked={variables.Rating === 3} onChange={(e) => {
+                        setVariables({...variables, Rating: 3});
                     }}/>
                     <span>4</span>
-                    <Radio value={4} checked={rating === 4} onChange={(e) => {
-                        setRating(4);
-                    }}/>
+                    <Radio value={4} checked={variables.Rating === 4} onChange={(e) => {
+                        setVariables({...variables, Rating: 4});
+                    }
+
+                    }/>
                     <span>5</span>
-                    <Radio value={5} checked={rating === 5} onChange={(e) => {
-                        setRating(5);
+                    <Radio value={5} checked={variables.Rating === 5} onChange={(e) => {
+                        setVariables({...variables, Rating: 5});
                     }}/>
                 </div>
                 <Button className={classes.inputField} variant="outlined" color="secondary" onClick={(e) => {
