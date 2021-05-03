@@ -48,14 +48,23 @@ export const SingleEntry = ({match}) => {
 
     return (
         <div>
+            {data.singleEntry.Entryname && 
             <h1>{data.singleEntry.Entryname}</h1>
-            <img src={data.singleEntry.File} className={classes.img}/>
+        }
+            <img src={data.singleEntry.File} className={classes.img} alt="awoo"/>
             <h2>Ingredients:</h2>
+            {data.singleEntry.Ingredients &&
             <h3>{data.singleEntry.Ingredients}</h3>
+            }
             <h2>Steps:</h2>
+            {data.singleEntry.Steps &&
             <h3>{data.singleEntry.Steps}</h3>
+                }
             <h2>Rating:</h2>
+
+            {data.singleEntry.Rating &&
             <h3>{data.singleEntry.Rating.toString()}</h3>
+            }
             <Link to={`/Modify/${match.params.id}`}>
                 <Button variant='contained' size="small" color="primary" className={classes.btn}>
                     Edit
