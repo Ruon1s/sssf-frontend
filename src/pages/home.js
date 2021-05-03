@@ -49,19 +49,9 @@ const useStyles = makeStyles({
 export const Home = () => {
     const history = useHistory();
 
-    const [delState, setDelState] = useState(null);
+
     const classes = useStyles();
 
-    const [delEntry] = useMutation(DELETE_ENTRY, {
-        variables: {
-            id: delState
-        },
-        onCompleted:({delState})=> {
-            console.log(delState);
-            console.log('hello');
-            history.push('/')
-        }
-    });
 
     const userID = localStorage.getItem(AUTH_USERID);
     console.log('userid', userID);
@@ -71,16 +61,10 @@ export const Home = () => {
         }
     });
 
-    const onClickDelete = (id) => {
-
-        setDelState(id);
-        delEntry();
-
-    };
 
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :(</p>;
+    if (loading) return <h1>Loading</h1>;
+    if (error) return <h1>Error</h1>;
 
     const bringCards = () => {
         return data.entriesByUser.map(({id, Entryname, File, Ingredients, Steps, Rating}) => (
@@ -102,15 +86,6 @@ export const Home = () => {
                         </CardContent>
                     </CardActionArea>
                     </Link>
-                    <CardActions className={classes.btnContainer}>
-                        <Button variant='contained' size="small" color="primary" className={classes.btn}>
-                            Edit
-                        </Button>
-                        <Button variant='contained' size="small" color="secondary" onClick={onClickDelete(id)}>
-                            Delete
-                        </Button>
-
-                    </CardActions>
                 </Card>
         ))
     };

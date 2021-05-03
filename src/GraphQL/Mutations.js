@@ -13,6 +13,7 @@ export const DELETE_ENTRY = gql`
     deleteEntry(id: $id){
         Entryname
     }
+    }
 `;
 
 export const ADD_ENTRY = gql`
@@ -42,6 +43,29 @@ export const ADD_ENTRY = gql`
                 userID
                 }
    }
-   
-   
    `;
+
+export const MODIFY_ENTRY = gql`
+    mutation modifyEntry(
+    $id: String
+    $Entryname: String
+    $File: Upload
+    $Ingredients: String
+    $Steps: String
+    $Rating: Int) {
+        modifyEntry(
+        id: $id
+        Entryname: $Entryname
+        File: {File: $File}
+        Ingredients: $Ingredients
+        Steps: $Steps
+        Rating: $Rating)
+        {
+        Entryname
+        }
+        }
+        
+       
+
+
+`;
