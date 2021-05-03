@@ -51,23 +51,14 @@ export const ModifyEntry = ({match}) => {
     });
 
 
-    const [entryName, setEntryName] = useState('');
-    const [image, setImage] = useState(null);
-    const [ingredients, setIngredients] = useState("");
-    const [steps, setSteps] = useState("");
-    const [rating, setRating] = useState(null);
+    const [variables, setVariables] = useState({
+        id: match.params.id,
+    });
 
 
 
     const [modifyEntry] = useMutation(MODIFY_ENTRY, {
-        variables: {
-            id: match.params.id,
-            File: image,
-            Entryname: entryName,
-            Ingredients: ingredients,
-            Steps: steps,
-            Rating: rating
-        },
+        variables,
         onCompleted: ({modifyEntry}) => {
             console.log('Modified');
             history.push('/Home');
@@ -86,8 +77,8 @@ export const ModifyEntry = ({match}) => {
             <form className={classes.form}>
                 <p className={classes.inputField}>Entry name</p>
                 <TextField className={classes.inputField} id="outlined-basic" variant="outlined"
-                           placeholder={data.singleEntry.Entryname} value={entryName} onChange={(e) => {
-                    setEntryName(e.target.value);
+                           placeholder={data.singleEntry.Entryname} value={variables.Entryname} onChange={(e) => {
+                    setVariables({...variables, Entryname: e.target.value})
                 }
                 }/>
                 <input
@@ -95,44 +86,42 @@ export const ModifyEntry = ({match}) => {
                     id="raised-button-file"
                     type="file"
                     onChange={(e) => {
-                        setImage(e.target.files[0]);
-                        console.log(image);
+                        setVariables({...variables, File: e.target.files[0]});
                     }
                     }
                 />
                 <p className={classes.inputField}>Ingredients</p>
                 <TextareaAutosize className={classes.inputField} placeholder={data.singleEntry.Ingredients}
-                                  id="outlined-basic" variant="outlined" value={ingredients} onChange={(e) => {
-                    setIngredients(e.target.value);
+                                  id="outlined-basic" variant="outlined" value={variables.Ingredients} onChange={(e) => {
+                                      setVariables({...variables, Ingredients: e.target.value});
                 }
                 }/>
                 <p className={classes.inputField}>Steps</p>
                 <TextareaAutosize className={classes.inputField} placeholder={data.singleEntry.Steps}
-                                  id="outlined-basic" label="Steps" variant="outlined" value={steps} onChange={(e) => {
-                    setSteps(e.target.value);
+                                  id="outlined-basic" label="Steps" variant="outlined" value={variables.Steps} onChange={(e) => {
+                                      setVariables({...variables, Steps: e.target.value});
                 }
                 }/>
                 <div>
                     <span>1</span>
-                    <Radio value={1} checked={rating === 1} onChange={(e) => {
-                        setRating(1);
-                        console.log(image);
+                    <Radio value={1} checked={variables.Rating === 1} onChange={(e) => {
+                        setVariables({...variables, Rating: 1});
                     }}/>
                     <span>2</span>
-                    <Radio value={2} checked={rating === 2} onChange={(e) => {
-                        setRating(2);
+                    <Radio value={2} checked={variables.Rating === 2} onChange={(e) => {
+                        setVariables({...variables, Rating: 2});
                     }}/>
                     <span>3</span>
-                    <Radio value={3} checked={rating === 3} onChange={(e) => {
-                        setRating(3);
+                    <Radio value={3} checked={variables.Rating === 3} onChange={(e) => {
+                        setVariables({...variables, Rating: 3});
                     }}/>
                     <span>4</span>
-                    <Radio value={4} checked={rating === 4} onChange={(e) => {
-                        setRating(4);
+                    <Radio value={4} checked={variables.Rating === 4} onChange={(e) => {
+                        setVariables({...variables, Rating: 4});
                     }}/>
                     <span>5</span>
-                    <Radio value={5} checked={rating === 5} onChange={(e) => {
-                        setRating(5);
+                    <Radio value={5} checked={variables.Rating === 5} onChange={(e) => {
+                        setVariables({...variables, Rating: 5});
                     }}/>
                 </div>
                 <Button className={classes.inputField} variant="outlined" color="secondary" onClick={(e) => {
