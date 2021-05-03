@@ -60,17 +60,22 @@ export const Home = () => {
             <Card className={classes.root}>
                 <Link to={`/Single/${id}`}>
                     <CardActionArea>
+                        
                         <CardMedia
                             className={classes.media}
                             image={File}
                             title="Entry image"
                         />
+                   
                         <CardContent>
+
+                            
                             <Typography gutterBottom variant="h5" component="h2">
-                                {Entryname}
+                            {Entryname &&   `${Entryname} `}
                             </Typography>
+                            
                             <Typography variant="body2" color="textSecondary" component="p">
-                               {Rating && Rating: {Rating.toString()}/5 }
+                               {Rating && `Rating: ${Rating.toString()}/5`}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
