@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router'
 import {TextField, makeStyles, Button} from "@material-ui/core";
-import {gql, useMutation} from '@apollo/client';
+import {gql, useLazyQuery, useMutation} from '@apollo/client';
 import {REGISTER_USER} from '../GraphQL/Mutations'
+import {LOGIN_USER} from "../GraphQL/Queries";
+import {AUTH_TOKEN, AUTH_USERID} from "../constants";
 
 export const Register = () => {
     const history = useHistory();
@@ -45,6 +47,25 @@ export const Register = () => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
+    const [login, {loading, error, data}] = useLazyQuery(LOGIN_USER, {
+        variables: {
+            username: userName,
+            password: password
+        },
+        onCompleted: ({login}) => {
+            console.log(login);
+            localStorage.setItem(AUTH_TOKEN, login.token);
+            localStorage.setItem(AUTH_USERID, login.id);
+            console.log('hello');
+            history.push('/Home');
+            window.location.reload();
+        },
+        onError(error) {
+            console.log(error);
+        },
+
+    });
+
     const [register] = useMutation(REGISTER_USER, {
         variables: {
             username: userName,
@@ -53,9 +74,11 @@ export const Register = () => {
         onCompleted: ({register}) => {
             console.log(register);
             console.log('hello');
-            history.push('/')
+            login();
         }
     });
+
+
 
     const klikkaa = () => {
         console.log('hey u klikked');
