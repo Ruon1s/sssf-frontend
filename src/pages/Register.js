@@ -1,8 +1,7 @@
-
 import React, {useState} from 'react';
 import {useHistory} from 'react-router'
 import {TextField, makeStyles, Button} from "@material-ui/core";
-import { gql, useMutation } from '@apollo/client';
+import {gql, useMutation} from '@apollo/client';
 import {REGISTER_USER} from '../GraphQL/Mutations'
 
 export const Register = () => {
@@ -41,8 +40,6 @@ export const Register = () => {
     }));
 
 
-
-
     const classes = useStyles();
 
     const [userName, setUserName] = useState("");
@@ -53,7 +50,7 @@ export const Register = () => {
             username: userName,
             password: password
         },
-        onCompleted:({register})=> {
+        onCompleted: ({register}) => {
             console.log(register);
             console.log('hello');
             history.push('/')
@@ -67,22 +64,25 @@ export const Register = () => {
         register();
     };
 
-    return(
+    return (
         <div className={classes.container}>
-        <div className={classes.content}>
-            Register
-        <form className={classes.form} autoComplete="off">
-        <TextField className={classes.inputField} id="outlined-basic" label="Username" variant="outlined" value={userName} onChange={(e) => {
-            setUserName(e.target.value);
-        } }/>
-        <TextField className={classes.inputField} id="outlined-basic" label="Password" variant="outlined" value={password} type='password' onChange={(e) => {
-            setPassword(e.target.value);
-        }}/>
-            <Button variant='contained' className={classes.button} onClick={(e) => {
-                klikkaa();}}
-            >Submit</Button>
-        </form>
-        </div>
+            <div className={classes.content}>
+                Register
+                <form className={classes.form} autoComplete="off">
+                    <TextField className={classes.inputField} id="outlined-basic" label="Username" variant="outlined"
+                               value={userName} onChange={(e) => {
+                        setUserName(e.target.value);
+                    }}/>
+                    <TextField className={classes.inputField} id="outlined-basic" label="Password" variant="outlined"
+                               value={password} type='password' onChange={(e) => {
+                        setPassword(e.target.value);
+                    }}/>
+                    <Button variant='contained' className={classes.button} onClick={(e) => {
+                        klikkaa();
+                    }}
+                    >Submit</Button>
+                </form>
+            </div>
         </div>
     );
 };

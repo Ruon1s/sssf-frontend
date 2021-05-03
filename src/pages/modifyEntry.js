@@ -51,13 +51,13 @@ export const ModifyEntry = ({match}) => {
     });
 
 
-
-
     const [entryName, setEntryName] = useState('');
     const [image, setImage] = useState(null);
     const [ingredients, setIngredients] = useState("");
     const [steps, setSteps] = useState("");
     const [rating, setRating] = useState(null);
+
+
 
     const [modifyEntry] = useMutation(MODIFY_ENTRY, {
         variables: {
@@ -73,7 +73,7 @@ export const ModifyEntry = ({match}) => {
             history.push('/Home');
             window.location.reload();
         },
-        onError(error){
+        onError(error) {
             console.log(error);
         }
     });
@@ -81,11 +81,12 @@ export const ModifyEntry = ({match}) => {
     if (loading) return <h1>Loading</h1>;
     if (error) return <h1>Error</h1>;
 
-    return(
+    return (
         <div className={classes.container}>
             <form className={classes.form}>
                 <p className={classes.inputField}>Entry name</p>
-                <TextField className={classes.inputField} id="outlined-basic" variant="outlined" placeholder={data.singleEntry.Entryname} value={entryName} onChange={(e) => {
+                <TextField className={classes.inputField} id="outlined-basic" variant="outlined"
+                           placeholder={data.singleEntry.Entryname} value={entryName} onChange={(e) => {
                     setEntryName(e.target.value);
                 }
                 }/>
@@ -100,12 +101,14 @@ export const ModifyEntry = ({match}) => {
                     }
                 />
                 <p className={classes.inputField}>Ingredients</p>
-                <TextareaAutosize className={classes.inputField} placeholder={data.singleEntry.Ingredients} id="outlined-basic" variant="outlined" value={ingredients} onChange={(e) => {
+                <TextareaAutosize className={classes.inputField} placeholder={data.singleEntry.Ingredients}
+                                  id="outlined-basic" variant="outlined" value={ingredients} onChange={(e) => {
                     setIngredients(e.target.value);
                 }
                 }/>
                 <p className={classes.inputField}>Steps</p>
-                <TextareaAutosize className={classes.inputField} placeholder={data.singleEntry.Steps} id="outlined-basic" label="Steps" variant="outlined" value={steps} onChange={(e) => {
+                <TextareaAutosize className={classes.inputField} placeholder={data.singleEntry.Steps}
+                                  id="outlined-basic" label="Steps" variant="outlined" value={steps} onChange={(e) => {
                     setSteps(e.target.value);
                 }
                 }/>
@@ -120,7 +123,7 @@ export const ModifyEntry = ({match}) => {
                         setRating(2);
                     }}/>
                     <span>3</span>
-                    <Radio value={3} checked={rating === 3}  onChange={(e) => {
+                    <Radio value={3} checked={rating === 3} onChange={(e) => {
                         setRating(3);
                     }}/>
                     <span>4</span>
@@ -137,7 +140,6 @@ export const ModifyEntry = ({match}) => {
                 }}>
                     Submit
                 </Button>
-
 
 
             </form>

@@ -1,17 +1,13 @@
-import React, {useState} from 'react';
-import {Link, useHistory} from "react-router-dom";
-import {Header} from "../components/Header";
-import {useQuery, useMutation} from "@apollo/client";
+import React from 'react';
+import {Link} from "react-router-dom";
+import {useQuery} from "@apollo/client";
 import {GET_ENTRIES} from "../GraphQL/Queries";
-import {DELETE_ENTRY, REGISTER_USER} from "../GraphQL/Mutations";
 import {AUTH_USERID} from "../constants";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -32,35 +28,28 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         textAlign: 'center',
     },
-    btn: {
-
-    },
+    btn: {},
     btnContainer: {
         display: 'flex',
         flexWrap: 'wrap',
-       justifyContent: 'space-between',
+        justifyContent: 'space-between',
 
 
     }
 });
 
 
-
 export const Home = () => {
-    const history = useHistory();
-
-
     const classes = useStyles();
 
 
     const userID = localStorage.getItem(AUTH_USERID);
     console.log('userid', userID);
-    const  {loading, error, data} = useQuery(GET_ENTRIES, {
+    const {loading, error, data} = useQuery(GET_ENTRIES, {
         variables: {
             id: userID
         }
     });
-
 
 
     if (loading) return <h1>Loading</h1>;
@@ -68,8 +57,8 @@ export const Home = () => {
 
     const bringCards = () => {
         return data.entriesByUser.map(({id, Entryname, File, Ingredients, Steps, Rating}) => (
-                <Card className={classes.root}>
-                    <Link to={`/Single/${id}`}>
+            <Card className={classes.root}>
+                <Link to={`/Single/${id}`}>
                     <CardActionArea>
                         <CardMedia
                             className={classes.media}
@@ -85,20 +74,20 @@ export const Home = () => {
                             </Typography>
                         </CardContent>
                     </CardActionArea>
-                    </Link>
-                </Card>
+                </Link>
+            </Card>
         ))
     };
 
-return(
-    <div className={classes.divi}>
-    <h1>Your entries</h1>
-    <div className={classes.wrapper}>
+    return (
+        <div className={classes.divi}>
+            <h1>Your entries</h1>
+            <div className={classes.wrapper}>
 
-        {bringCards()}
+                {bringCards()}
 
-    </div>
-    </div>
+            </div>
+        </div>
 
 
     );

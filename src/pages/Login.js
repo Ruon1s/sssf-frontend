@@ -46,40 +46,43 @@ export const Login = () => {
     const [password, setPassword] = useState("");
 
 
-        const [login, {loading, error, data}] = useLazyQuery(LOGIN_USER, {
-            variables: {
-                username: userName,
-                password: password
-            },
-            onCompleted:({login})=> {
-                console.log(login);
-                localStorage.setItem(AUTH_TOKEN, login.token);
-                localStorage.setItem(AUTH_USERID, login.id);
-                console.log('hello');
-                history.push('/Home');
-                window.location.reload();
-            },
-            onError(error){
-                console.log(error);
+    const [login, {loading, error, data}] = useLazyQuery(LOGIN_USER, {
+        variables: {
+            username: userName,
+            password: password
+        },
+        onCompleted: ({login}) => {
+            console.log(login);
+            localStorage.setItem(AUTH_TOKEN, login.token);
+            localStorage.setItem(AUTH_USERID, login.id);
+            console.log('hello');
+            history.push('/Home');
+            window.location.reload();
+        },
+        onError(error) {
+            console.log(error);
         },
 
-        });
+    });
 
 
     const classes = useStyles();
-    return(
+    return (
         <div className={classes.container}>
             <div className={classes.content}>
                 Login
                 <form className={classes.form} autoComplete="off">
-                    <TextField className={classes.inputField} id="outlined-basic" label="Username" variant="outlined" value={userName} onChange={(e) => {
+                    <TextField className={classes.inputField} id="outlined-basic" label="Username" variant="outlined"
+                               value={userName} onChange={(e) => {
                         setUserName(e.target.value);
-                    } }/>
-                    <TextField className={classes.inputField} id="outlined-basic" label="Password" variant="outlined" value={password} type='password' onChange={(e) => {
+                    }}/>
+                    <TextField className={classes.inputField} id="outlined-basic" label="Password" variant="outlined"
+                               value={password} type='password' onChange={(e) => {
                         setPassword(e.target.value);
                     }}/>
                     <Button variant='contained' className={classes.button} onClick={(e) => {
-                        login() ;}}
+                        login();
+                    }}
                     >Submit</Button>
                 </form>
             </div>
