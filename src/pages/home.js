@@ -70,7 +70,7 @@ export const Home = () => {
                                 {Entryname}
                             </Typography>
                             <Typography variant="body2" color="textSecondary" component="p">
-                                Rating: {Rating.toString()}/5
+                               {Rating && Rating: {Rating.toString()}/5 }
                             </Typography>
                         </CardContent>
                     </CardActionArea>
